@@ -3,135 +3,156 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>God First — Login</title>
+  <title>Faith Wear — Login</title>
   <style>
     :root{
-      --bg: #f5f5f5;
-      --card-bg: #ffffff;
-      --text: #111;
-      --muted: #666;
+      --bg:#f7f7f8; --card:#fff; --text:#0b0b0b; --muted:#666;
     }
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{height:100%}
     body{
       font-family: Inter, Arial, sans-serif;
-      background: var(--bg);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:24px;
+      background: linear-gradient(180deg,#f3f4f6,#ffffff);
+      display:flex;align-items:center;justify-content:center;padding:24px;
     }
 
-    /* FULLSCREEN CARD: makes the page feel large on desktop and mobile */
     .card{
-      width: min(720px, 92vw);
-      height: min(760px, 92vh);
-      background: var(--card-bg);
+      width: min(900px, 96vw);
+      height: min(820px, 92vh);
+      background: var(--card);
       border-radius: 18px;
-      box-shadow: 0 18px 50px rgba(0,0,0,0.09);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.08);
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      overflow:hidden;
+    }
+
+    /* left side branding */
+    .brand {
+      padding: 60px;
       display:flex;
       flex-direction:column;
-      align-items:center;
       justify-content:center;
-      padding:48px;
-      text-align:center;
+      background: linear-gradient(135deg,#fff,#fafafa);
     }
+    .logo { font-size:84px; color:#000; line-height:1; margin-bottom:10px; }
+    h1 { font-size:56px; margin:0 0 10px; font-weight:800; color:var(--text) }
+    .tag { color:var(--muted); font-size:18px }
 
-    .logo {
-      font-size: 56px;
-      line-height:1;
-      margin-bottom:10px;
-      color:var(--text);
-    }
-    h1{
-      font-size:48px;
-      margin-bottom:8px;
-      letter-spacing:0.2px;
-      font-weight:800;
-      color:var(--text);
-    }
-    .tag{
-      color:var(--muted);
-      margin-bottom:30px;
-      font-size:18px;
-    }
-
-    .form{
-      width:100%;
-      max-width:460px;
+    /* right side panel */
+    .panel {
+      padding: 36px;
       display:flex;
       flex-direction:column;
-      gap:14px;
-      margin-top:10px;
+      justify-content:center;
+      background: #fff;
     }
+    .panel h2 { margin-bottom:4px; font-size:22px; }
+    .panel p { color:var(--muted); margin-bottom:18px; font-size:14px; }
 
-    .form input{
-      width:100%;
-      padding:14px 16px;
-      border-radius:12px;
-      border:1px solid #e6e6e6;
-      font-size:16px;
-      outline:none;
+    .form { display:flex; flex-direction:column; gap:12px; }
+    .form input {
+      padding:12px 14px; border-radius:10px; border:1px solid #e6e6e6; font-size:15px;
     }
-
-    .btn{
-      padding:14px 18px;
-      border-radius:12px;
-      border:none;
-      background:#000;
-      color:#fff;
-      font-weight:700;
-      font-size:16px;
-      cursor:pointer;
-      margin-top:6px;
+    .btn {
+      padding:12px; border-radius:10px; border:none; background:#000; color:#fff;
+      font-weight:700; cursor:pointer; font-size:15px;
     }
+    .alt { background:#f3f3f3;color:#111;border:1px solid #e6e6e6; }
 
-    .copyright{
-      margin-top:26px;
-      font-size:13px;
-      color:var(--muted);
-    }
+    .links { margin-top:12px; font-size:13px; color:var(--muted); display:flex; gap:8px; justify-content:space-between; }
 
-    /* Mobile tweak */
-    @media (max-width:420px){
-      .logo{font-size:40px}
-      h1{font-size:34px}
-      .card{padding:28px;height:auto}
+    .note { margin-top:20px; font-size:13px; color:var(--muted); text-align:center; }
+
+    @media (max-width:900px){
+      .card{grid-template-columns:1fr; height:auto}
+      .brand{padding:40px;text-align:center}
+      .panel{padding:28px}
+      .logo{font-size:64px}
+      h1{font-size:40px}
     }
   </style>
 </head>
 <body>
-  <main class="card" role="main" aria-labelledby="brandTitle">
-    <div class="logo" aria-hidden="true">✝</div>
-    <h1 id="brandTitle">God First</h1>
-    <div class="tag">Faith. Style. Purpose.</div>
+  <div class="card" role="main" aria-labelledby="brandTitle">
+    <div class="brand" aria-hidden="true">
+      <div class="logo">✝</div>
+      <h1 id="brandTitle">Faith Wear</h1>
+      <div class="tag">Faith. Style. Purpose.</div>
+    </div>
 
-    <form class="form" onsubmit="handleLogin(event)" autocomplete="off" novalidate>
-      <input id="username" name="username" type="text" placeholder="Username" required />
-      <input id="password" name="password" type="password" placeholder="Password" required />
-      <button class="btn" type="submit">Login</button>
-    </form>
+    <div class="panel">
+      <h2>Log in</h2>
+      <p>Sign in to access the shop.</p>
 
-    <div class="copyright">© 2025 God First | Designed with Faith ✝</div>
-  </main>
+      <form id="form" class="form" onsubmit="return false;">
+        <input id="email" type="email" placeholder="Email" required autocomplete="email" />
+        <input id="password" type="password" placeholder="Password" required autocomplete="current-password" />
+        <button id="loginBtn" class="btn">Log in</button>
+        <button id="signupBtn" class="btn alt" type="button">Create account</button>
+      </form>
 
-  <script>
-    // Very small client-side handler for demo behavior.
-    // On submit we store a session flag and redirect to / (you can change this).
-    function handleLogin(e){
-      e.preventDefault();
-      const u = document.getElementById('username').value.trim();
-      const p = document.getElementById('password').value.trim();
-      if(!u || !p){
-        alert('Enter username and password.');
-        return;
+      <div class="links">
+        <div id="status" style="color:#c00"></div>
+        <div style="font-size:13px;color:var(--muted)">Forgot password? (not implemented)</div>
+      </div>
+
+      <div class="note">© <span id="year"></span> Faith Wear</div>
+    </div>
+  </div>
+
+  <!-- Firebase helper module -->
+  <script type="module">
+    import {
+      auth,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      onAuthStateChanged
+    } from './firebase.js';
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const emailEl = document.getElementById('email');
+    const pwEl = document.getElementById('password');
+    const status = document.getElementById('status');
+    const loginBtn = document.getElementById('loginBtn');
+    const signupBtn = document.getElementById('signupBtn');
+
+    loginBtn.addEventListener('click', async () => {
+      status.textContent = '';
+      const email = emailEl.value.trim();
+      const pw = pwEl.value.trim();
+      if (!email || !pw) { status.textContent = 'Enter email and password.'; return; }
+      loginBtn.disabled = true;
+      try {
+        await signInWithEmailAndPassword(auth, email, pw);
+        location.href = 'shop.html';
+      } catch (err) {
+        status.textContent = err.message || 'Login failed.';
       }
-      // Demo: accept any non-empty credentials
-      sessionStorage.setItem('gf_logged_in', '1');
-      // stay on single page (no other pages exist). If you later add a shop page,
-      // replace the line below with: location.href = '/shop.html';
-      alert('Logged in (demo). This demo page is intentionally single-page.'); 
-    }
+      loginBtn.disabled = false;
+    });
+
+    signupBtn.addEventListener('click', async () => {
+      status.textContent = '';
+      const email = emailEl.value.trim();
+      const pw = pwEl.value.trim();
+      if (!email || !pw) { status.textContent = 'Enter email and password.'; return; }
+      signupBtn.disabled = true;
+      try {
+        await createUserWithEmailAndPassword(auth, email, pw);
+        location.href = 'shop.html';
+      } catch (err) {
+        status.textContent = err.message || 'Signup failed.';
+      }
+      signupBtn.disabled = false;
+    });
+
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        location.href = 'shop.html';
+      }
+    });
   </script>
 </body>
 </html>
